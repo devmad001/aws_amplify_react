@@ -1,0 +1,17 @@
+@keyframes changeColorHigh {
+  0%, 100% {
+    background-color: #ef535077;
+  }
+  50% {
+    background-color: transparent;
+  }
+}
+
+@keyframes changeColorLow {
+  0%, 100% {
+    background-color: #efcc2177;
+  }
+  50% {
+    background-color: transparent;
+  }
+}

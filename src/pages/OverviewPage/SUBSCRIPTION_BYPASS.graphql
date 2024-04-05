@@ -1,0 +1,7 @@
+subscription {
+  bypasses {
+    site_id
+    start_time
+    end_time
+  }
+}

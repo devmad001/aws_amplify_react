@@ -1,0 +1,10 @@
+subscription {
+	dashboard_data (where: { _or: [
+    { source: {_eq: "traffic"}},
+    { source: {_eq: "weatherForecast"}},
+    { source: {_eq: "vehicle"}},
+  ]}) {
+    data
+    source
+  }
+}

@@ -1,0 +1,13 @@
+mutation UPDATE($incident_id: Int!, $comment: String) {
+  update_incidents_by_pk(pk_columns: {id: $incident_id}, _set: {comment: $comment}) {
+    id
+    comment
+  }
+  insert_incident_changelogs_one(object: {incident_id: $incident_id, field: "comment"}) {
+    id
+    field
+    incident_id
+    user_id
+    created_at
+  }
+}

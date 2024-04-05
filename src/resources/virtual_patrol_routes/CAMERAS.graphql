@@ -1,0 +1,8 @@
+query CAMERAS($site_id: Int!) {
+  cameras(where: {site_id: {_eq: $site_id}}, order_by: {name: asc}) {
+    id
+    name
+    latitude
+    longitude
+  }
+}

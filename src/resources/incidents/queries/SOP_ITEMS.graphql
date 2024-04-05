@@ -1,0 +1,8 @@
+query SOP_ITEMS {
+  sop_items(order_by: { order: asc }) {
+    id
+    name
+    site_id
+    incident_type_id
+  }
+}

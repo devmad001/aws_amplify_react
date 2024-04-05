@@ -1,0 +1,22 @@
+query INCIDENT_DETAILS {
+  sites(order_by: {name: asc}) {
+    id
+    name
+  }
+  incidenttypes(order_by: {order: asc}) {
+    id
+    name
+  }
+  sensors(order_by: {name: asc}) {
+    id
+    name
+    severity_type_id
+    site_id
+    sensor_type_id
+    sensor_type {
+      id
+      name
+      incident_type_id
+    }
+  }
+}

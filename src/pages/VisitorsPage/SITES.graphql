@@ -1,0 +1,8 @@
+subscription SITES {
+  sites {
+    id
+    name
+    latitude
+    longitude
+  }
+}

@@ -1,0 +1,8 @@
+mutation UPDATE_CAMERA_CHECKLIST($id: Int!, $name: String!, $order: Int!) {
+  update_camera_checklists_by_pk(pk_columns: {id: $id}, _set: {name: $name, order: $order}) {
+    id
+    camera_id
+    name
+    order
+  }
+}

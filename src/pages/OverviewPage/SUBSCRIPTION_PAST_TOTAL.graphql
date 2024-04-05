@@ -1,0 +1,7 @@
+subscription {
+  incidents_aggregate(where: {status_type_id: {_neq: 1}}) {
+    aggregate {
+      count
+    }
+  }
+}

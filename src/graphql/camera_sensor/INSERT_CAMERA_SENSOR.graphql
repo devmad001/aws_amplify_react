@@ -1,0 +1,5 @@
+mutation ($camera_id: Int!, $sensor_id: Int!){
+  insert_camera_sensor_one(object: {camera_id: $camera_id, sensor_id: $sensor_id}) {
+    id
+  }
+}

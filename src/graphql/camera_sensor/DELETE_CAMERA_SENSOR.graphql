@@ -1,0 +1,5 @@
+mutation ($camera_id: Int!, $sensor_id: Int!) {
+  delete_camera_sensor(where: {camera_id: {_eq: $camera_id}, sensor_id: {_eq: $sensor_id}}) {
+    affected_rows
+  }
+}

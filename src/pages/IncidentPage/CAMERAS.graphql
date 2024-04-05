@@ -1,0 +1,10 @@
+query CameraQuery( $id: Int ) {
+  cameras(where: {id: {_eq: $id}}) {
+    id
+    name
+    rtsp_params
+    rtsp_stream
+    latitude
+    longitude
+  }
+}

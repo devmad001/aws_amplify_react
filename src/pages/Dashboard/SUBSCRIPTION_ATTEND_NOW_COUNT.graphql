@@ -1,0 +1,13 @@
+subscription {
+  # get the number of ATTEND NOW incidents
+  incidents_aggregate (
+    where: {
+      status_type: { name: { _eq: "Open" } },
+      severity_type: { name: { _eq: "Attend Now" } }
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

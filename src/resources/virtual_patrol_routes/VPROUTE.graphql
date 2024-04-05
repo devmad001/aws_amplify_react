@@ -1,0 +1,15 @@
+query VPROUTE($id: Int!) {
+  route: virtual_patrol_routes_by_pk(id: $id) {
+    id
+    name
+    routeCameras(order_by: {order: asc}) {
+      id
+      order
+      camera_id
+      camera {
+        id
+        name
+      }
+    }
+  }
+}

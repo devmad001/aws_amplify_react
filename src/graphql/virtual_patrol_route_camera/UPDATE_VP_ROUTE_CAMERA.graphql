@@ -1,0 +1,11 @@
+mutation UPDATE_VP_ROUTE_CAMERA($id: Int!, $camera_id: Int!, $order: Int!) {
+  update_virtual_patrol_route_camera_by_pk(
+    pk_columns: { id: $id }
+    _set: { camera_id: $camera_id, order: $order }
+  ) {
+    id
+    virtual_patrol_route_id
+    camera_id
+    order
+  }
+}

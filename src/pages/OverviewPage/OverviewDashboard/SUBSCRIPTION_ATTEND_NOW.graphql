@@ -1,0 +1,9 @@
+subscription {
+    incidents( where: {
+      status_type: { name: {_eq: "Open"} },
+      severity_type: { name: {_eq: "Attend Now"} }
+    } ) {
+    	id
+      start_time
+    }
+}

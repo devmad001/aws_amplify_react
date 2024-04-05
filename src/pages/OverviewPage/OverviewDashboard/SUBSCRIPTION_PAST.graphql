@@ -1,0 +1,6 @@
+subscription {
+  incidents( where: { status_type: { name: {_neq: "Open"} } } ) {
+    id
+    start_time
+  }
+}

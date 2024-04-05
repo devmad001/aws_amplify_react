@@ -1,0 +1,11 @@
+query CHECKLISTS($camera_id: Int!) {
+  checklists: camera_checklists(
+    where: { camera_id: { _eq: $camera_id } }
+    order_by: { order: asc }
+  ) {
+    __typename
+    id
+    name
+    order
+  }
+}

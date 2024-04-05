@@ -1,0 +1,32 @@
+subscription {
+  incidents(where: {status_type_id: {_neq: 1}}, order_by: {start_time: desc}) {
+    id
+    name
+    start_time
+    end_time
+    created_by
+    site {
+      id
+      csid
+      name
+    }
+    status_type {
+      id
+      name
+      order
+    }
+    severity_type {
+      id
+      name
+    }
+    incident_type {
+      id
+      name
+      icon
+    }
+    operator_id
+    incident_viewers {
+      viewer_id
+    }
+  }
+}

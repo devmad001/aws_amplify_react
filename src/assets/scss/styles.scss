@@ -1,0 +1,16 @@
+@import "./variables";
+@import "./common";
+@import "./session";
+@import "./responsive";
+@import "./dark-theme";
+@import "./rtl-layout";
+
+// mapbox logo
+.mapboxgl-ctrl-logo {
+  display: none !important;
+}
+
+// ovenplayer black bar
+.ovenplayer .op-caption-text-container {
+  display: none !important;
+}

@@ -1,0 +1,15 @@
+subscription {
+  # get all sites related to PAST incidents
+  incidents (
+    where: {
+      status_type: { name: { _neq: "Open" } },
+    },
+    distinct_on: [site_id]
+  ) {
+    site {
+      id
+      latitude
+      longitude
+    }
+  }
+}

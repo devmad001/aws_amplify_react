@@ -1,0 +1,14 @@
+subscription ($id: Int!) {
+  incident: incidents_by_pk(id: $id) {
+    sop_items(order_by: {order: asc}) {
+      id
+      name
+      sop_checked_items(
+        where: { incident_id: { _eq: $id }, checked: { _eq: true } }
+      ) {
+        id
+        checked
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+subscription ($id: Int!) {
+  incident: incidents_by_pk(id: $id) {
+    incident_changelogs(order_by: {created_at: desc}) {
+      id
+      user_id
+      field
+      created_at
+    }
+  }
+}

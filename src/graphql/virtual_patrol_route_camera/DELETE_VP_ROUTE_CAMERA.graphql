@@ -1,0 +1,8 @@
+mutation ($id: Int!) {
+  delete_virtual_patrol_route_camera_by_pk(id: $id) {
+    id
+    virtual_patrol_route_id
+    camera_id
+    order
+  }
+}

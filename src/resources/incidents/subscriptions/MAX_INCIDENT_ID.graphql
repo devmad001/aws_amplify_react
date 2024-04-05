@@ -1,0 +1,9 @@
+subscription MAX_INCIDENT_ID {
+  incidents: incidents_aggregate {
+    aggregate {
+      max {
+        id
+      }
+    }
+  }
+}

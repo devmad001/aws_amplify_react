@@ -1,0 +1,39 @@
+subscription ($limit: Int!, $offset: Int!, $search: String!) {
+  incidents(where: {status_type_id: {_neq: 1},
+    _or: [
+      {name: {_ilike: $search}}, 
+      {site: {name: {_ilike: $search}}},
+      {status_type: {name: {_ilike: $search}}},
+      {incident_type: {name: {_ilike: $search}}},
+    ]},
+    order_by: {start_time: desc}, limit: $limit, offset: $offset) {
+    id
+    name
+    start_time
+    end_time
+    created_by
+    site {
+      id
+      csid
+      name
+    }
+    status_type {
+      id
+      name
+      order
+    }
+    incident_type {
+      id
+      name
+      icon
+    }
+    severity_type {
+      id
+      name
+    }
+    operator_id
+    incident_viewers {
+      viewer_id
+    }
+  }
+}

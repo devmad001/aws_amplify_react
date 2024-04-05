@@ -1,0 +1,60 @@
+subscription ($id: Int!) {
+  incident: incidents_by_pk(id: $id) {
+    id
+    start_time
+    end_time
+    comment
+    details
+    videos
+    created_by
+    sensor {
+      id
+      name
+      camera_sensors {
+        camera {
+          id
+          name
+        }
+      }
+      camera_sensors_aggregate(order_by: {camera: {name: asc}}) {
+        nodes {
+          camera {
+            id
+            name
+          }
+        }
+      }
+    }
+    incident_type {
+      id
+      name
+      icon
+    }
+    site {
+      id
+      csid
+      name
+      address
+    }
+    status_type {
+      id
+      name
+    }
+    operator_id
+    sop_items(order_by: {order: asc}) {
+      id
+      name
+      sop_checked_items(
+        where: { incident_id: { _eq: $id }, checked: { _eq: true } }
+      ) {
+        id
+        checked
+      }
+    }
+    contacts(order_by: {name: asc}) {
+      id
+      name
+      handphone
+    }
+  }
+}

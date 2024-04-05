@@ -1,0 +1,8 @@
+mutation DELETE_CAMERA_CHECKLIST($id: Int!) {
+  delete_camera_checklists_by_pk(id: $id) {
+    id
+    camera_id
+    name
+    order
+  }
+}

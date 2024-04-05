@@ -1,0 +1,7 @@
+subscription ($id: Int!) {
+  bypasses(where: {site: {incidents: {id: {_eq: $id}}}}) {
+    site_id
+    start_time
+    end_time
+  }
+}

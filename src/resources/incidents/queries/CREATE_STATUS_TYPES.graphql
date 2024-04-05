@@ -1,0 +1,6 @@
+query CREATE_STATUS_TYPES {
+  status_types(order_by: {order: asc}, where: {id: {_neq: 1}}) {
+    id
+    name
+  }
+}

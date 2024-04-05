@@ -1,0 +1,33 @@
+subscription($andWhere: incidents_bool_exp! = {}) {
+  incidents(where: {_and: [{status_type_id: {_eq: 1}}, $andWhere]}, order_by: {status_type: {order: asc}, incident_viewers_aggregate: {count: asc}, start_time: asc}) {
+    id
+    name
+    start_time
+    site {
+      id
+      csid
+      name
+    }
+    status_type {
+      id
+      name
+    }
+    severity_type {
+      id
+      name
+    }
+    incident_type {
+      id
+      name
+      icon
+    }
+    operator_id
+    incident_viewers {
+      viewer_id
+    }
+    sensor {
+      latitude
+      longitude
+    }
+  }
+}

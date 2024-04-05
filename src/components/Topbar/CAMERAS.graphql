@@ -1,0 +1,11 @@
+subscription {
+  cameras(where: {params: {_has_key: "error"}}) {
+    id
+    name
+    params
+    site {
+      id
+      name
+    }
+  }
+}

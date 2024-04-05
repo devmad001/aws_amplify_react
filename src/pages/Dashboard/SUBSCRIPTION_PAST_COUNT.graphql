@@ -1,0 +1,12 @@
+subscription {
+  # get the number of PAST incidents
+  incidents_aggregate (
+    where: {
+      status_type: { name: { _neq: "Open" } },
+    }
+  ) {
+    aggregate {
+      count
+    }
+  }
+}

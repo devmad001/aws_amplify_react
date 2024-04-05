@@ -1,0 +1,17 @@
+subscription {
+  # get all sites related to ACTIVE incidents
+  incidents (
+    where: {
+      status_type: { name: { _eq: "Open" } }
+    },
+  ) {
+    severity_type {
+      id
+    }
+    site {
+      id
+      latitude
+      longitude
+    }
+  }
+}

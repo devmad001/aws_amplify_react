@@ -1,0 +1,5 @@
+subscription ($id: Int!) {
+  incident: incidents_by_pk(id: $id) {
+    comment
+  }
+}

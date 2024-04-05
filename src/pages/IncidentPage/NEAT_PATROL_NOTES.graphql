@@ -1,0 +1,7 @@
+query NeatPatrolNotesQuery( $incident_id: Int ) {
+  neat_patrol_notes(where: {incident_id: {_eq: $incident_id}}) {
+    id
+    timestamp
+    details
+  }
+}

@@ -1,0 +1,12 @@
+subscription ($_gte: timestamptz!, $_lte: timestamptz!) {
+  bypasses(where: {end_time: {_gte: $_gte, _lte: $_lte}}) {
+    id
+    site_id
+    start_time
+    end_time
+    site {
+      id
+      csid
+    }
+  }
+}

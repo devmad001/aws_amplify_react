@@ -1,0 +1,13 @@
+subscription {
+  cameras {
+    id
+    name
+    params
+    site_id
+    aid
+    site {
+      id
+      name
+    }
+  }
+}

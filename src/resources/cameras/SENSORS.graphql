@@ -1,0 +1,20 @@
+query ($id: Int!) {
+  camera: cameras_by_pk(id: $id) {
+    id
+    name
+    latitude
+    longitude
+    site {
+      sensors(order_by: {name: asc}){
+        id
+        name
+        latitude
+        longitude
+        camera_sensors {
+          camera_id
+          sensor_id
+        }
+      }
+    }
+  }
+}

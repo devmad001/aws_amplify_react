@@ -1,0 +1,370 @@
+// @flow
+
+import React from 'react';
+import type { Node } from 'react';
+import { NavLink, useRouteMatch } from 'react-router-dom';
+import {
+  makeStyles, List, ListItem, ListItemText, Box, Icon, Collapse,
+} from '@material-ui/core';
+import clsx from 'clsx';
+
+type Props = {
+  icon?: string,
+  title?: string,
+  desc?: string,
+  to?: string,
+  isOpen?: boolean,
+  toggleOpen?: () => void,
+  customOnClick?: () => void,
+  closeResponsiveSidebar?: () => void,
+  children?: Node,
+};
+
+const useStyles = makeStyles( theme => ( {
+  textWhite: {
+    color: `${ theme.palette.common.white } !important`,
+    '& span ,& a': {
+      color: theme.palette.common.white,
+      fontSize: '0.9375rem ',
+    },
+  },
+  ListItem: {
+    borderBottom: '1px solid #404854',
+    paddingTop: 14,
+    paddingBottom: 14,
+    '&:hover': {
+      backgroundColor: '#515864',
+    },
+  },
+  desc: {
+    color: '#969fa4',
+    '& span': {
+      fontSize: '0.75rem',
+      color: '#969fa4',
+    },
+  },
+  iconWrap: {
+    fontFamily: 'Material Icons Outlined',
+    fontSize: '20px !important',
+    opacity: '0.75',
+  },
+  font9: {
+    fontFamily: 'Material Icons Outlined',
+    fontSize: '9px !important',
+  },
+  truncate: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  childMenu: {
+    padding: 0,
+    '& a': {
+      padding: '5px 10px 5px 36px',
+    },
+  },
+  menuOpen: {
+    backgroundColor: '#19222b',
+    borderBottom: '0 !important',
+    '&:hover': {
+      backgroundColor: '#19222b',
+    },
+    '& .sub-menu': {
+      padding: '0 0 10px',
+      '& .active': {
+        backgroundColor: '#515864',
+      },
+    },
+  },
+  textLink: {
+    borderBottom: '1px solid #404854',
+    padding: 0,
+    '& a': {
+      padding: '14px 16px',
+      display: 'block',
+    },
+  },
+  linkActive: {
+    backgroundColor: '#19222b',
+    '&:hover': {
+      backgroundColor: '#19222b',
+    },
+  },
+  w100: {
+    width: '100%',
+  },
+  flexCenter: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'start',
+    width: '100%',
+  },
+} ) );
+
+const ChildMenuItem = ( props: {
+  title?: string,
+  to?: string,
+  customOnClick?: () => void,
+  closeResponsiveSidebar?: () => void,
+} ) => {
+  const classes = useStyles();
+  const {
+    title, to, customOnClick, closeResponsiveSidebar,
+  } = props;
+
+  return (
+    <ListItem
+      disableRipple
+      button
+      component="li"
+      style={ { paddingTop: 0, paddingBottom: 0 } }
+      onClick={ () => {
+        if ( closeResponsiveSidebar ) closeResponsiveSidebar();
+        if ( customOnClick ) customOnClick();
+      } }
+      className={ classes.childMenu }
+    >
+      { to
+        ? (
+          <NavLink
+            className={ `list-link ${ classes.flexCenter }` }
+            to={ to }
+          >
+            <Box mr={ 1 } component="span" className={ `icon ${ classes.font9 }` }>remove</Box>
+            <span>{ title }</span>
+          </NavLink>
+        )
+        : (
+          <span
+            className={ `list-link ${ classes.flexCenter }` }
+          >
+            <Box mr={ 1 } component="span" className={ `icon ${ classes.font9 }` }>remove</Box>
+            <span>{ title }</span>
+          </span>
+        )}
+
+    </ListItem>
+  );
+};
+
+ChildMenuItem.defaultProps = {
+  title: 'Menu Item',
+  to: null,
+  customOnClick: undefined,
+  closeResponsiveSidebar: undefined,
+};
+
+const MenuItemWithChildren = ( props: {
+  icon?: string,
+  title?: string,
+  desc?: string,
+  isOpen: boolean,
+  toggleOpen: () => void,
+  customOnClick?: () => void,
+  closeResponsiveSidebar?: () => void,
+  children?: Node,
+} ) => {
+  const classes = useStyles();
+  const {
+    icon, title, desc, isOpen, toggleOpen, customOnClick, closeResponsiveSidebar, children,
+  } = props;
+
+  return (
+    <li>
+      {/* menu item */}
+      <ListItem
+        disableRipple
+        button
+        component="div"
+        onClick={ () => {
+          if ( toggleOpen ) toggleOpen();
+          if ( closeResponsiveSidebar ) closeResponsiveSidebar();
+          if ( customOnClick ) customOnClick();
+        } }
+        className={ clsx( classes.textWhite, classes.ListItem, {
+          [ `${ classes.menuOpen }` ]: isOpen,
+        }, 'list-item' ) }
+      >
+        <div className={ classes.w100 }>
+          {/* menu title */}
+          <div className={ classes.flexCenter }>
+            <Box component="span" className={ classes.iconWrap }>{ icon }</Box>
+            <ListItemText primary={ title } style={ { paddingLeft: 12 } } />
+            { isOpen
+              ? <Icon style={ { fontSize: 20, width: 25 } }>arrow_drop_up</Icon>
+              : <Icon style={ { fontSize: 20, width: 25 } }>arrow_drop_down</Icon>}
+          </div>
+          {/* menu description: shown when closed */}
+          { desc && !isOpen
+            && (
+            <Box fontSize="body1.fontSize" className={ `desc-wrap ${ classes.truncate } ${ classes.desc }` } display="block">
+              { desc }
+            </Box>
+            ) }
+          {/* autogenerated menu description: shown when closed */}
+          { children && !desc && !isOpen
+            && (
+            <Box fontSize="body1.fontSize" className={ `desc-wrap ${ classes.truncate } ${ classes.desc }` } display="block">
+              { React.Children.map( children, childMenuItem => (
+                <span key={ childMenuItem.key }>
+                  { childMenuItem.props.title }
+                </span>
+              ) ).reduce( ( prev, curr ) => [ prev, ', ', curr ], [] ) }
+            </Box>
+            ) }
+        </div>
+      </ListItem>
+      {/* children inside collapse element: shown when opened */}
+      <Collapse
+        in={ isOpen }
+        timeout="auto"
+        unmountOnExit
+        className={ clsx( classes.textWhite, { [ classes.menuOpen ]: isOpen } ) }
+      >
+        <List component="ul" className="sub-menu">
+          { React.Children.map( children, childMenuItem => (
+            <ChildMenuItem
+              key={ childMenuItem.key || childMenuItem.props.title }
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              { ...childMenuItem.props }
+            />
+          ) ) }
+        </List>
+      </Collapse>
+    </li>
+  );
+};
+
+MenuItemWithChildren.defaultProps = {
+  icon: 'menu',
+  title: 'Menu Item',
+  desc: '',
+  customOnClick: undefined,
+  closeResponsiveSidebar: undefined,
+  children: [],
+};
+
+const MenuItemWithoutChildren = ( props: {
+  icon?: string,
+  title?: string,
+  desc?: string,
+  to?: string,
+  toggleOpen: () => void,
+  customOnClick?: () => void,
+  closeResponsiveSidebar?: () => void,
+} ) => {
+  const classes = useStyles();
+  const {
+    icon, title, desc, to, toggleOpen, customOnClick, closeResponsiveSidebar,
+  } = props;
+  const match = useRouteMatch( to );
+
+  return (
+    <ListItem
+      disableRipple
+      button
+      component="li"
+      className={ clsx( classes.textWhite, classes.textLink, {
+        [ classes.linkActive ]: match && match.isExact,
+      }, 'list-item' ) }
+      onClick={ () => {
+        if ( toggleOpen ) toggleOpen();
+        if ( closeResponsiveSidebar ) closeResponsiveSidebar();
+        if ( customOnClick ) customOnClick();
+      } }
+    >
+      <div className={ classes.w100 }>
+        { to
+          ? (
+            <NavLink to={ to }>
+              <Box className={ classes.flexCenter }>
+                <Box component="span" className={ classes.iconWrap }>{ icon }</Box>
+                <ListItemText primary={ title } style={ { paddingLeft: 12 } } />
+              </Box>
+              { desc
+              && (
+              <Box fontSize="body1.fontSize" className={ `desc-wrap ${ classes.truncate } ${ classes.desc }` } display="block">
+                { desc }
+              </Box>
+              ) }
+            </NavLink>
+          )
+          : (
+            // eslint-disable-next-line jsx-a11y/anchor-is-valid
+            <a href="#">
+              <Box className={ classes.flexCenter }>
+                <Box component="span" className={ classes.iconWrap }>{ icon }</Box>
+                <ListItemText primary={ title } style={ { paddingLeft: 12 } } />
+              </Box>
+              { desc
+              && (
+              <Box fontSize="body1.fontSize" className={ `desc-wrap ${ classes.truncate } ${ classes.desc }` } display="block">
+                { desc }
+              </Box>
+              ) }
+            </a>
+          )}
+
+      </div>
+    </ListItem>
+  );
+};
+
+MenuItemWithoutChildren.defaultProps = {
+  icon: 'menu',
+  title: 'Menu Item',
+  desc: '',
+  to: null,
+  customOnClick: undefined,
+  closeResponsiveSidebar: undefined,
+};
+
+const MenuItem = ( props: Props ) => {
+  const {
+    icon, title, desc, to, isOpen, toggleOpen = () => {},
+    customOnClick, closeResponsiveSidebar, children,
+  } = props;
+
+  // menu item has children
+  if ( children && React.Children.count( children ) ) {
+    return (
+      <MenuItemWithChildren
+        icon={ icon }
+        title={ title }
+        desc={ desc }
+        isOpen={ isOpen || false }
+        toggleOpen={ toggleOpen }
+        customOnClick={ customOnClick }
+        closeResponsiveSidebar={ closeResponsiveSidebar }
+      >
+        { children }
+      </MenuItemWithChildren>
+    );
+  }
+  // menu item has no children
+  return (
+    <MenuItemWithoutChildren
+      icon={ icon }
+      title={ title }
+      desc={ desc }
+      to={ to }
+      toggleOpen={ toggleOpen }
+      customOnClick={ customOnClick }
+      closeResponsiveSidebar={ closeResponsiveSidebar }
+    />
+  );
+};
+
+MenuItem.defaultProps = {
+  icon: 'menu',
+  title: 'Menu Item',
+  desc: '',
+  to: null,
+  isOpen: false,
+  toggleOpen: undefined,
+  customOnClick: undefined,
+  closeResponsiveSidebar: undefined,
+  children: [],
+};
+
+export default MenuItem;

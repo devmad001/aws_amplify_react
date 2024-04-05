@@ -1,0 +1,12 @@
+/* [No] column */
+.neat-patrol-table-custom table tr th:nth-child(1) {
+  width: 50px !important;
+}
+/* [Date & Time] column */
+.neat-patrol-table-custom table tr th:nth-child(2) {
+  width: 200px !important;
+}
+/* [Message] column */
+.neat-patrol-table-custom table tr th:last-child {
+  width: auto !important;
+}

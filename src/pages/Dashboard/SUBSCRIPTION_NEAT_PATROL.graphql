@@ -1,0 +1,13 @@
+subscription ($startDay: bigint!, $endDay: bigint!) {
+  sensors (where: {
+    channel: {_regex: "^np-"}, # hannels starting with 'np-'
+    location_last_updated: {_gte: $startDay, _lte: $endDay}, # within current day
+    _or: [{latitude: {_neq: 0}}, {longitude: {_neq: 0}}] # if latlong (0,0), will not display
+  }) {
+    id
+    channel
+    latitude
+    longitude
+    location_last_updated
+  }
+}

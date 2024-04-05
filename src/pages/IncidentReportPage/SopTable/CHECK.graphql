@@ -1,0 +1,18 @@
+mutation CHECK($incident_id: Int, $sop_item_id: Int, $checked: Boolean) {
+  insert_sop_checked_items_one(
+    object: {
+      sop_item_id: $sop_item_id
+      checked: $checked
+      incident_id: $incident_id
+    }
+    on_conflict: {
+      constraint: sop_checked_items_incident_id_sop_item_id_key
+      update_columns: checked
+    }
+  ) {
+    id
+    incident_id
+    sop_item_id
+    checked
+  }
+}
